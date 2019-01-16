@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>TinyApp</title>
+  </head>
+  <body>
+    <% include ./partials/_header %>
+    <h2>This is your shortened URL</h2>
+      <h1><%= shortURL %></h1>
+
+    <h2>This is your original URL</h2>
+      <h1><%= urls[shortURL] %></h1>
+
+
+
+    <a href="/urls">Back</a>
+  </body>
+</html>
