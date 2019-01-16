@@ -56,6 +56,14 @@ app.get("/u/:shortURL", (req, res) => {
   res.redirect(longURL);
 });
 
+app.post("/urls/:id/delete", (req, res) => {
+  const urlID = req.params.id;
+  // console.log(urlID);
+  delete urlDatabase.urlID;
+  // console.log(delete urlDatabase.urlID);
+  // console.log(urlDatabase);
+  res.redirect("/urls");
+});
 
 // app.get("/urls.json", (req, res) => {
 //   res.json(urlDatabase);
