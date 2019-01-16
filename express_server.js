@@ -58,20 +58,10 @@ app.get("/u/:shortURL", (req, res) => {
 
 app.post("/urls/:id/delete", (req, res) => {
   const urlID = req.params.id;
-  // console.log(urlID);
-  delete urlDatabase.urlID;
-  // console.log(delete urlDatabase.urlID);
-  // console.log(urlDatabase);
+  console.log(urlDatabase[urlID])
+  delete urlDatabase[urlID];
   res.redirect("/urls");
 });
-
-// app.get("/urls.json", (req, res) => {
-//   res.json(urlDatabase);
-// });
-
-// app.get("/hello", (req, res) => {
-//   res.send("<html><body>Hello<b>World</b></body></html>\n");
-// });
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
