@@ -43,6 +43,7 @@ app.post("/urls", (req, res) => {
   res.redirect(`/urls/${randomString}`);
 });
 
+//SHOW ROUTE
 app.get("/urls/:id", (req, res) => {
   let templateVars = { shortURL: req.params.id, urls: urlDatabase };
   res.render("urls_show", templateVars);
@@ -56,9 +57,16 @@ app.get("/u/:shortURL", (req, res) => {
   res.redirect(longURL);
 });
 
+//EDIT + UPDATE ROUTE
+app.post("/urls/:id", (req, res) => {
+  const urlID = req.params.id;
+  urlDatabase[urlID] = req.body.longURL;
+  res.redirect("/urls");
+});
+
+//DELETE ROUTE
 app.post("/urls/:id/delete", (req, res) => {
   const urlID = req.params.id;
-  console.log(urlDatabase[urlID])
   delete urlDatabase[urlID];
   res.redirect("/urls");
 });
