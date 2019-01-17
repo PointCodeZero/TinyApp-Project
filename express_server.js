@@ -17,10 +17,23 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-let urlDatabase = {
+const urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
   "9sm5xK": "http://www.google.com"
 };
+
+const users = {
+  "f01": {
+    id: "f01",
+    email: "mike@gmail.com",
+    password: "meow"
+  },
+ "f02": {
+    id: "f02",
+    email: "andreia@gmail.com",
+    password: "deia"
+  }
+}
 
 //ROOT ROUTE
 app.get("/", (req, res) => {
