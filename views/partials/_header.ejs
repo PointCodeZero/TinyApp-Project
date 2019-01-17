@@ -22,25 +22,31 @@
             <a class="nav-link" href="#">Link</a>
           </li>
         </ul>
-        <!-- <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form> -->
-        <% if (!username) { %>
-        <form action="/login" method="POST">
-          <input type="text" name="username" placeholder="username">
-          <input type="submit" value="login">
-        </form>
-        <% } else { %>
-        <h3><%= username %></h3>
-        <form action="/logout" method="POST">
-          <input type="submit" value="logout">
-        </form>
-      <% } %>
+      </div>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <% if (!user) { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/register">Sign Up</a>
+            </li>
+          <% } else { %>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><strong>Welcome <%= user.email %>!</strong></a>
+            </li>
+            <form action="/logout" method="POST">
+              <input type="submit" value="logout">
+            </form>
+          <% } %>
+        </ul>
       </div>
     </nav>
 
-<h1>Welcome to TinyApp</h1>
+    <div class="container">
+      <h1>Welcome to TinyApp</h1>
 
 
 
@@ -49,17 +55,4 @@
 
 
 
-
-<!--
-<% if (!username) { %>
-  <form action="/login" method="POST">
-    <input type="text" name="username" placeholder="username">
-    <input type="submit" value="login">
-  </form>
-<% } else { %>
-  <h3><%= username %></h3>
-  <form action="/logout" method="POST">
-    <input type="submit" value="logout">
-  </form>
-<% } %> -->
 

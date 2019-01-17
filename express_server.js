@@ -42,13 +42,14 @@ app.get("/", (req, res) => {
 
 //INDEX ROUTE
 app.get("/urls", (req, res) => {
-  let templateVars = { urls: urlDatabase, username: req.cookies.username };
+  let templateVars = { urls: urlDatabase, user: users[`${req.cookies.user_id}`] };
   res.render("urls_index", templateVars);
 });
 
 //NEW ROUTE
 app.get("/urls/new", (req, res) => {
-  res.render("urls_new", { username: req.cookie });
+  let templateVars = { user: users[`${req.cookies.user_id}`] };
+  res.render("urls_new", templateVars);
 });
 
 //CREATE ROUTE
@@ -60,7 +61,7 @@ app.post("/urls", (req, res) => {
 
 //SHOW ROUTE
 app.get("/urls/:id", (req, res) => {
-  let templateVars = { shortURL: req.params.id, urls: urlDatabase, username: req.cookies.username };
+  let templateVars = { shortURL: req.params.id, urls: urlDatabase, user: users[`${req.cookies.user_id}`] };
   res.render("urls_show", templateVars);
 });
 
@@ -87,20 +88,24 @@ app.post("/urls/:id/delete", (req, res) => {
 });
 
 //LOGIN ROUTE
+app.get("/login", (req, res) => {
+  res.render("login", { user: req.cookie });
+});
+
 app.post("/login", (req, res) => {
-  res.cookie("username", req.body.username);
+  res.cookie("user_id", req.body.user_id);
   res.redirect("/urls");
 });
 
 //LOGOUT ROUTE
 app.post("/logout", (req, res) => {
-  res.clearCookie('username');
+  res.clearCookie('user_id');
   res.redirect("/urls");
 });
 
 //REGISTER ROUTE
 app.get("/register", (req, res) => {
-  res.render("register", { username: req.cookie });
+  res.render("register", { user: req.cookie });
 });
 
 app.post("/register", (req, res) => {
