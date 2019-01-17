@@ -49,7 +49,10 @@ app.get("/urls", (req, res) => {
 //NEW ROUTE
 app.get("/urls/new", (req, res) => {
   let templateVars = { user: users[`${req.cookies.user_id}`] };
-  res.render("urls_new", templateVars);
+  if (req.cookies.user_id) {
+    return res.render("urls_new", templateVars);
+  }
+  res.redirect("/login");
 });
 
 //CREATE ROUTE
