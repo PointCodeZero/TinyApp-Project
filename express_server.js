@@ -104,13 +104,18 @@ app.get("/register", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-  const userID = generateRandomString();
-  users[userID] = {
-    id: userID,
-    email: req.body.email,
-    password: req.body.password
+  const newID = generateRandomString();
+  const newEmail = req.body.email;
+  const newPassword = req.body.password;
+  if (!newEmail || !newPassword) {
+    return res.status(400).send("Please provide an email and password");
+  }
+  users[newID] = {
+    id: newID,
+    email: newEmail,
+    password: newPassword
   };
-  res.cookie("user_id", userID);
+  res.cookie("user_id", newID);
   res.redirect("/urls");
 });
 
