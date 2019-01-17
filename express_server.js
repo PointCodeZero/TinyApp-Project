@@ -88,7 +88,7 @@ app.post("/urls/:id/delete", (req, res) => {
 
 //LOGIN ROUTE
 app.post("/login", (req, res) => {
-  res.cookie('username', req.body.username);
+  res.cookie("username", req.body.username);
   res.redirect("/urls");
 });
 
@@ -100,9 +100,21 @@ app.post("/logout", (req, res) => {
 
 //REGISTER ROUTE
 app.get("/register", (req, res) => {
-  res.render("register");
+  res.render("register", { username: req.cookie });
+});
+
+app.post("/register", (req, res) => {
+  const userID = generateRandomString();
+  users[userID] = {
+    id: userID,
+    email: req.body.email,
+    password: req.body.password
+  };
+  res.cookie("user_id", userID);
+  res.redirect("/urls");
 });
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
+
