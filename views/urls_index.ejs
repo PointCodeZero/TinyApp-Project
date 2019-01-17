@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>TinyApp</title>
-  </head>
-  <body>
-    <% include ./partials/_header %>
+<% include ./partials/_header %>
+
+<!-- JUMBOTRON -->
+
     <ul>
       <% for(var url in urls) { %>
         <li><%= url %>: <%= urls[url] %></li>
@@ -15,5 +12,5 @@
       <% }; %>
     </ul>
     <a href="/urls/new">Shortening</a>
-  </body>
-</html>
+
+<% include ./partials/_footer %>
