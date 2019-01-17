@@ -93,13 +93,22 @@ app.get("/login", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  res.cookie("user_id", req.body.user_id);
-  res.redirect("/urls");
+  const email = req.body.email;
+  const password = req.body.password;
+  for(let user in users){
+    if (email === users[user].email && password === users[user].password) {
+      res.cookie("user_id", users[user].id);
+      return res.redirect("/urls");
+    }
+  }
+  res.status(403).send("BEGONE!");
+  // res.cookie("user_id", req.body.user_id);
+  // res.redirect("/urls");
 });
 
 //LOGOUT ROUTE
 app.post("/logout", (req, res) => {
-  res.clearCookie('user_id');
+  res.clearCookie("user_id");
   res.redirect("/urls");
 });
 
