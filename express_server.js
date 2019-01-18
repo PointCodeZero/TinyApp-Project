@@ -14,11 +14,12 @@ function generateRandomString() {
 //   }
 // }
 
-const express    = require("express"),
-      bodyParser = require("body-parser"),
+const express      = require("express"),
+      bodyParser   = require("body-parser"),
       cookieParser = require("cookie-parser"),
-      app        = express(),
-      PORT       = 8080;
+      bcrypt       = require('bcrypt'),
+      app          = express(),
+      PORT         = 8080;
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -127,13 +128,14 @@ app.get("/login", (req, res) => {
 app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
+
   for(let user in users){
-    if (email === users[user].email && password === users[user].password) {
+    if (email === users[user].email && bcrypt.compareSync(password, users[user].password)) {
       res.cookie("user_id", users[user].id);
       return res.redirect("/urls");
     }
   }
-  res.status(403).send("BEGONE!");
+  res.status(403).send("BEGONE YOUR HACKER!!!!!");
 });
 
 //LOGOUT ROUTE
@@ -150,15 +152,21 @@ app.get("/register", (req, res) => {
 app.post("/register", (req, res) => {
   const newID = generateRandomString();
   const newEmail = req.body.email;
-  const newPassword = req.body.password;
-  if (!newEmail || !newPassword) {
+  const password = req.body.password;
+  const hashedPassword = bcrypt.hashSync(password, 10);
+
+  // bcrypt.compareSync("purple-monkey-dinosaur", hashedPassword)
+
+  if (!newEmail || !password) {
     return res.status(400).send("Please provide an email and password");
   }
+
   users[newID] = {
     id: newID,
     email: newEmail,
-    password: newPassword
+    password: hashedPassword
   };
+
   res.cookie("user_id", newID);
   res.redirect("/urls");
 });
