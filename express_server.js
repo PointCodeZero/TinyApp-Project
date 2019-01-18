@@ -7,6 +7,13 @@ function generateRandomString() {
    return shortURL;
 }
 
+// function userForId(shortURL) {
+// let test = urlDatabase[req.cookies.user_id];
+//   if (test === shortURL) {
+//     return res.send("This is not your URL");
+//   }
+// }
+
 const express    = require("express"),
       bodyParser = require("body-parser"),
       cookieParser = require("cookie-parser"),
@@ -18,8 +25,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 const urlDatabase = {
-  "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com"
+  "f01": {
+    "b2xVn2": "http://www.lighthouselabs.ca"
+    },
+  "f02": {
+    "9sm5xK": "http://www.google.com"
+  }
 };
 
 const users = {
@@ -42,7 +53,7 @@ app.get("/", (req, res) => {
 
 //INDEX ROUTE
 app.get("/urls", (req, res) => {
-  let templateVars = { urls: urlDatabase, user: users[`${req.cookies.user_id}`] };
+  let templateVars = { urls: urlDatabase[req.cookies.user_id], user: users[`${req.cookies.user_id}`] };
   res.render("urls_index", templateVars);
 });
 
@@ -58,36 +69,54 @@ app.get("/urls/new", (req, res) => {
 //CREATE ROUTE
 app.post("/urls", (req, res) => {
   let randomString = generateRandomString();
-  urlDatabase[randomString] = req.body.longURL;
+  urlDatabase[req.cookies.user_id][randomString] = req.body.longURL;
   res.redirect(`/urls/${randomString}`);
 });
 
 //SHOW ROUTE
 app.get("/urls/:id", (req, res) => {
-  let templateVars = { shortURL: req.params.id, urls: urlDatabase, user: users[`${req.cookies.user_id}`] };
+  let templateVars = { shortURL: req.params.id, urls: urlDatabase[req.cookies.user_id], user: users[`${req.cookies.user_id}`] };
+  if (!req.cookies.user_id) {
+    return res.redirect("/login");
+  }
+
+  if(req.cookies.user_id !== urlDatabase[req.cookies.user_id].id) {
+    return res.send("This short URL does not belong to you! Shame on YOU!!!!");
+  }
+
   res.render("urls_show", templateVars);
 });
 
+//EDIT + UPDATE ROUTE
 app.get("/u/:shortURL", (req, res) => {
-  let longURL = urlDatabase[req.params.shortURL];
-  if (!longURL) {
-    return res.send("I know what you did last summer!")
+
+  for (var userId in urlDatabase) {
+    for(var shortURL in urlDatabase[userId]) {
+      if (shortURL === req.params.shortURL) {
+        return res.redirect(urlDatabase[userId][shortURL]);
+      }
+    }
   }
-  res.redirect(longURL);
+  return res.send("This short URL does not exist!");
 });
 
-//EDIT + UPDATE ROUTE
 app.post("/urls/:id", (req, res) => {
   const urlID = req.params.id;
-  urlDatabase[urlID] = req.body.longURL;
-  res.redirect("/urls");
+  if (req.cookies.user_id) {
+    urlDatabase[req.cookies.user_id][urlID] = req.body.longURL;
+    return res.redirect("/urls");
+  }
+  res.redirect("/login");
 });
 
 //DELETE ROUTE
 app.post("/urls/:id/delete", (req, res) => {
   const urlID = req.params.id;
-  delete urlDatabase[urlID];
-  res.redirect("/urls");
+  if (req.cookies.user_id) {
+    delete urlDatabase[urlID];
+    return res.redirect("/urls");
+  }
+  res.redirect("/login");
 });
 
 //LOGIN ROUTE
@@ -105,8 +134,6 @@ app.post("/login", (req, res) => {
     }
   }
   res.status(403).send("BEGONE!");
-  // res.cookie("user_id", req.body.user_id);
-  // res.redirect("/urls");
 });
 
 //LOGOUT ROUTE

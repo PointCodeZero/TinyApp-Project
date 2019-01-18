@@ -2,6 +2,9 @@
 
 <!-- JUMBOTRON -->
 
+  <% if (!user) { %>
+    <h1>Please Login First</h1>
+  <% } else { %>
     <ul>
       <% for(var url in urls) { %>
         <li><%= url %>: <%= urls[url] %></li>
@@ -11,6 +14,7 @@
         </form>
       <% }; %>
     </ul>
+  <% } %>
     <a href="/urls/new">Shortening</a>
 
 <% include ./partials/_footer %>
