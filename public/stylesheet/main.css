@@ -1,0 +1,19 @@
+body {
+  background-color: #f3f1f1;
+}
+
+.begin {
+  margin-top: 3.0rem;
+}
+
+.bg-light {
+  background-color: #e9ecef !important;
+}
+
+.h2-display {
+  padding-bottom: 1rem;
+}
+
+.button-new {
+  margin: 1rem;
+}

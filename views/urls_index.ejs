@@ -1,20 +1,45 @@
 <% include ./partials/_header %>
 
-<!-- JUMBOTRON -->
-
   <% if (!user) { %>
-    <h1>Please Login First</h1>
+    <div class="jumbotron">
+      <h1 class="display-4">Wecome to TinyApp!</h1>
+      <p class="lead">The best place to get things short ad going!</p>
+      <hr class="my-4">
+      <p>Please login first before using our awesome tools!</p>
+      <a class="btn btn-primary btn-lg" href="/login" role="button">Login</a>
+    </div>
   <% } else { %>
-    <ul>
-      <% for(var url in urls) { %>
-        <li><%= url %>: <%= urls[url] %></li>
-        <a href="/urls/<%= url %>">Edit</a>
-        <form action="/urls/<%= url %>/delete" method="POST">
-          <input type="submit" value="Delete">
-        </form>
-      <% }; %>
-    </ul>
+    <div class="card">
+      <div class="card-header">
+        Quote
+      </div>
+      <div class="card-body">
+        <blockquote class="blockquote mb-0">
+          <p>Only a shortURL can save tweets...add yours now!</p>
+          <footer class="blockquote-footer">Gandalf <cite title="Source Title">Lord of The Rings</cite></footer>
+        </blockquote>
+      </div>
+    </div>
+    <div class="button-new">
+      <a class="btn btn-dark" href="/urls/new">Add</a>
+    </div>
+    <% for(var url in urls) { %>
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title"><%= url %></h3>
+          <p class="card-text"><%= urls[url] %></p>
+          <div class="d-inline-block">
+            <a class="btn btn-primary" href="/urls/<%= url %>">Edit</a>
+          </div>
+          <div class="d-inline-block">
+            <form action="/urls/<%= url %>/delete" method="POST">
+              <input class="btn btn-danger d-inline-block" type="submit" value="Delete">
+            </form>
+          </div>
+        </div>
+      </div>
+    <% }; %>
   <% } %>
-    <a href="/urls/new">Shortening</a>
+
 
 <% include ./partials/_footer %>

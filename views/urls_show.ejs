@@ -1,17 +1,24 @@
 <% include ./partials/_header %>
 
-    <h2>This is your shortened URL</h2>
-      <h1><%= shortURL %></h1>
-
-    <h2>This is your original URL</h2>
-      <h1><%= urls[shortURL] %></h1>
-
-    <form action="/urls/<%= shortURL %>" method="POST">
-      <input type="text" name="longURL" placeholder="http://...">
-      <input type="submit" value="Update">
+    <h2>Short URL: </h2>
+    <h1><%= shortURL %> - It's a Kind of Magic</h1>
+    <hr>
+    <div>
+      <h2 class="h2-display">This is your original URL</h2>
+      <h4><a href="<%= urls[shortURL] %>"><%= urls[shortURL] %></a></h4>
+    </div>
+    <hr>
+    <h3>If you are tired of the same destination update your URL:</h3>
+    <div>
+      <form action="/urls/<%= shortURL %>" method="POST">
+        <div class="form-group">
+          <input class="form-control" type="text" name="longURL" value="<%= urls[shortURL] %>">
+        </div>
+          <input class="btn btn-dark" type="submit" value="Update">
     </form>
-
-
-    <a href="/urls">Back</a>
+    </div>
+    <div class="button-new">
+      <a class="btn btn-light" href="/urls">Back</a>
+    </div>
 
 <% include ./partials/_footer %>

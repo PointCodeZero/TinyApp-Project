@@ -2,9 +2,13 @@
 
   <form action="/register" method="POST">
     <div class="form-group">
-      <input type="email" name="email" placeholder="xyw@gmail.com">
+      <label for="Email">Email:</label>
+      <input if="Email" class="form-control" type="email" name="email" placeholder="xyw@gmail.com">
       <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-      <input type="password" name="password" placeholder="Password">
+    </div>
+    <div class="form-group">
+      <label for="pass">Password:</label>
+      <input id="pass" class="form-control" type="password" name="password" placeholder="Password">
     </div>
     <button class="btn btn-primary" type="submit">Submit</button>
   </form>

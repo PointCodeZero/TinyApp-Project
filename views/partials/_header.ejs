@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel="stylesheet" type="css" href="./stylesheet/main.css">
+    <link rel="stylesheet" type="text/css" href="./stylesheet/main.css">
     <title>TinyApp</title>
   </head>
   <body>
@@ -18,14 +18,11 @@
           <li class="nav-item active">
             <a class="nav-link" href="/urls/new">Short URL <span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
         </ul>
       </div>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav ml-auto">
           <% if (!user) { %>
             <li class="nav-item">
               <a class="nav-link" href="/login">Login</a>
@@ -37,16 +34,15 @@
             <li class="nav-item">
               <a class="nav-link" href="#"><strong>Welcome <%= user.email %>!</strong></a>
             </li>
-            <form action="/logout" method="POST">
-              <input type="submit" value="logout">
+            <form class="float-rigth" action="/logout" method="POST">
+              <input class="btn btn-dark" type="submit" value="Logout">
             </form>
           <% } %>
         </ul>
       </div>
     </nav>
-
+    <div class="begin"></div>
     <div class="container">
-      <h1>Welcome to TinyApp</h1>
 
 
 

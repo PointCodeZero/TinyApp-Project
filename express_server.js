@@ -17,6 +17,7 @@ const express      = require("express"),
 
 
 app.set("view engine", "ejs");
+app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieSession({
   name: 'session',
@@ -179,11 +180,17 @@ app.post("/register", (req, res) => {
   if (!newEmail || !password) {
     return res.status(400).send("Please provide an email and password");
   }
+  for(let user in users) {
+    if (newEmail === users[user].email) {
+      return res.status(409).send("Sorry, this e-mail is already registered. Please try another one!");
+    }
+  }
   users[newID] = {
     id: newID,
     email: newEmail,
-    password: hashedPassword
+    password: hashedPassword,
   };
+  console.log(users);
   req.session.user_id = newID;
   res.redirect("/urls");
 });
