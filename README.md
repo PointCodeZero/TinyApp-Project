@@ -6,7 +6,7 @@ Users will be able to shorten long URLs and share it with the world.
 
 ## Images
 
-["Urls Landing Page"](https://github.com/PointCodeZero/TinyApp-Project/blob/master/docs/urls-land-page.jpg)
+!["Urls Landing Page"](https://github.com/PointCodeZero/TinyApp-Project/blob/master/docs/urls-land-page.jpg)
 
 ## Dependencies
 
