@@ -190,7 +190,6 @@ app.post("/register", (req, res) => {
     email: newEmail,
     password: hashedPassword,
   };
-  console.log(users);
   req.session.user_id = newID;
   res.redirect("/urls");
 });
