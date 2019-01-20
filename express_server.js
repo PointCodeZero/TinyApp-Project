@@ -1,13 +1,3 @@
-function generateRandomString() {
-  let shortURL = "";
-  let char = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  for (let i = 0; i < 6; i++) {
-     shortURL += char.charAt(Math.floor(Math.random() * char.length));
-   }
-   return shortURL;
-}
-
-
 const express      = require("express"),
       bodyParser   = require("body-parser"),
       cookieSession = require("cookie-session"),
@@ -17,7 +7,7 @@ const express      = require("express"),
 
 
 app.set("view engine", "ejs");
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieSession({
   name: 'session',
@@ -49,6 +39,16 @@ const users = {
     email: "andreia@gmail.com",
     password: "deia"
   }
+}
+
+
+function generateRandomString() {
+  let shortURL = "";
+  let char = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  for (let i = 0; i < 6; i++) {
+     shortURL += char.charAt(Math.floor(Math.random() * char.length));
+   }
+   return shortURL;
 }
 
 

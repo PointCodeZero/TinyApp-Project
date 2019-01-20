@@ -1,10 +1,10 @@
 <% include ./partials/_header %>
 
     <h2>Short URL: </h2>
-    <h1><%= shortURL %> - It's a Kind of Magic</h1>
+    <h1><%= shortURL %></h1>
     <hr>
     <div>
-      <h2 class="h2-display">This is your original URL</h2>
+      <h2 class="h2-display">Original URL</h2>
       <h4><a href="<%= urls[shortURL] %>"><%= urls[shortURL] %></a></h4>
     </div>
     <hr>
@@ -14,11 +14,13 @@
         <div class="form-group">
           <input class="form-control" type="text" name="longURL" value="<%= urls[shortURL] %>">
         </div>
+        <div class="d-flex">
           <input class="btn btn-dark" type="submit" value="Update">
-    </form>
+        <a class="btn btn-light ml-4" href="/urls">Back</a>
+        </div>
+      </form>
+
     </div>
-    <div class="button-new">
-      <a class="btn btn-light" href="/urls">Back</a>
-    </div>
+
 
 <% include ./partials/_footer %>
