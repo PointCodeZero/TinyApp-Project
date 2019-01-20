@@ -89,7 +89,7 @@ app.post("/urls", (req, res) => {
 });
 
 
-//SHOW ROUTE
+//SHOW ROUTE - improvement: rigth function to loop and check URLs
 app.get("/urls/:id", (req, res) => {
   const templateVars = {
     shortURL: req.params.id, urls: urlDatabase[req.session.user_id],
@@ -101,9 +101,6 @@ app.get("/urls/:id", (req, res) => {
   if(!urlDatabase[req.session.user_id][req.params.id]) {
     return res.send("This short URL does not belong to you! Shame on YOU!!!!");
   }
-
-  //improvement - rigth function to loop and check URLs
-
   res.render("urls_show", templateVars);
 });
 
@@ -151,7 +148,6 @@ app.post("/login", (req, res) => {
   const password = req.body.password;
   for(let user in users){
     if (email === users[user].email && bcrypt.compareSync(password, users[user].password)) {
-      // res.session("user_id", users[user].id);
       req.session.user_id = users[user].id;
       return res.redirect("/urls");
     }
