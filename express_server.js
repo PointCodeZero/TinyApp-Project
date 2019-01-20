@@ -44,7 +44,7 @@ const users = {
 
 function generateRandomString() {
   let shortURL = "";
-  let char = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const char = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   for (let i = 0; i < 6; i++) {
      shortURL += char.charAt(Math.floor(Math.random() * char.length));
    }
@@ -70,7 +70,7 @@ app.get("/urls", (req, res) => {
 
 //NEW ROUTE
 app.get("/urls/new", (req, res) => {
-  let templateVars = { user: users[`${req.session.user_id}`] };
+  const templateVars = { user: users[`${req.session.user_id}`] };
   if (req.session.user_id) {
     return res.render("urls_new", templateVars);
   }
@@ -80,7 +80,7 @@ app.get("/urls/new", (req, res) => {
 
 //CREATE ROUTE
 app.post("/urls", (req, res) => {
-  let randomString = generateRandomString();
+  const randomString = generateRandomString();
   if (!urlDatabase[req.session.user_id]) {
     urlDatabase[req.session.user_id] = {}
   }
@@ -91,7 +91,7 @@ app.post("/urls", (req, res) => {
 
 //SHOW ROUTE
 app.get("/urls/:id", (req, res) => {
-  let templateVars = {
+  const templateVars = {
     shortURL: req.params.id, urls: urlDatabase[req.session.user_id],
     user: users[`${req.session.user_id}`]
   };
