@@ -1,9 +1,9 @@
-const express      = require("express"),
-      bodyParser   = require("body-parser"),
+const express       = require("express"),
+      bodyParser    = require("body-parser"),
       cookieSession = require("cookie-session"),
-      bcrypt       = require('bcrypt'),
-      app          = express(),
-      PORT         = 8080;
+      bcrypt        = require('bcrypt'),
+      app           = express(),
+      PORT          = 8080;
 
 
 app.set("view engine", "ejs");
@@ -49,6 +49,15 @@ function generateRandomString() {
      shortURL += char.charAt(Math.floor(Math.random() * char.length));
    }
    return shortURL;
+}
+
+
+function buildNewUser(newID, newEmail, newPassword) {
+  return users[newID] = {
+    id: newID,
+    email: newEmail,
+    password: newPassword,
+  };
 }
 
 
@@ -181,11 +190,7 @@ app.post("/register", (req, res) => {
       return res.status(409).send("Sorry, this e-mail is already registered. Please try another one!");
     }
   }
-  users[newID] = {
-    id: newID,
-    email: newEmail,
-    password: hashedPassword,
-  };
+  buildNewUser(newID, newEmail, hashedPassword);
   req.session.user_id = newID;
   res.redirect("/urls");
 });
