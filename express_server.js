@@ -54,7 +54,7 @@ function generateRandomString() {
 
 //ROOT ROUTE
 app.get("/", (req, res) => {
-  res.send("Hello");
+  res.redirect("/urls");
 });
 
 
