@@ -116,11 +116,12 @@ app.get("/urls/:id", (req, res) => {
 
 //EDIT + UPDATE ROUTE
 app.get("/u/:shortURL", (req, res) => {
-  for (let userId in urlDatabase) {
-    for(let shortURL in urlDatabase[userId]) {
-      if (shortURL === req.params.shortURL) {
-        return res.redirect(urlDatabase[userId][shortURL]);
-      }
+  const shortURL = req.params.shortURL;
+  let id = ""
+  for(let user in users) {
+    if (user === req.session.user_id) {
+      id = req.session.user_id;
+      return res.redirect(urlDatabase[id][shortURL]);
     }
   }
   return res.send("This short URL does not exist!");
